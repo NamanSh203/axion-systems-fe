@@ -1,18 +1,53 @@
-# Starter pipeline
-# Start with a minimal pipeline that you can customize to build and deploy your code.
-# Add steps that build, run tests, deploy, and more:
-# https://aka.ms/yaml
+pool: default
 
 trigger: none
 
-pool:
-  vmImage: ubuntu-latest
+stages:
 
-steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
+- stage: nodejsInstall
+  displayName: Node.js installation
+  dependsOn: []
+  jobs: 
+  - job: nodejsInstall
+    displayName: Node.js installation
+    steps: 
+    - task: UseNode@1
+      inputs:
+        versionSource: 'spec'
+        version: '22.x'
 
-- script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-  displayName: 'Run a multi-line script'
+- stage: build
+  displayName: Build
+  dependsOn: nodejsInstall
+  jobs:
+  - job: build
+    displayName: build
+    steps:
+    - task: Npm@1
+      displayName: npm install
+      inputs:
+        command: 'install'
+        workingDir: '$(Build.SourcesDirectory)'
+
+    - task: Npm@1
+      displayName: npm run build
+      inputs:
+        command: 'custom'
+        workingDir: '$(Build.SourcesDirectory)'
+        customCommand: 'npm run build'
+
+
+- stage: nginxInstall
+  displayName: Nginx Installation
+  dependsOn: []
+  jobs: 
+  - job: nginxInstall
+    displayName: Nginx installation
+    steps: 
+    - task: Bash@3
+      inputs:
+        targetType: 'inline'
+        script: |
+          sudo apt update
+          sudo apt install nginx
+
