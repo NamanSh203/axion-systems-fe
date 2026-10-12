@@ -29,14 +29,9 @@ stages:
         customCommand: 'run build'
 
     - task: Bash@3
-      displayName: Verify dist folder
       inputs:
-        targetType: inline
-        script: |
-          echo "Source directory:"
-          echo "$(Build.SourcesDirectory)"
-          echo "Build output:"
-          ls -la "$(Build.SourcesDirectory)/dist"
+        targetType: 'inline'
+        script: 'npm run build'
 
 
 - stage: nginxInstall
