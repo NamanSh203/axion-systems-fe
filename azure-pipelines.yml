@@ -4,8 +4,8 @@ trigger: none
 
 stages:
 
-- stage: dependencyInstall
-  displayName: Node.js installation
+- stage: Build
+  displayName: Build Frontend
   dependsOn: []
   jobs: 
   - job: dependencyInstall
@@ -16,20 +16,16 @@ stages:
       inputs:
         versionSource: 'spec'
         version: '22.x'
-   
-   
+  
     - task: Npm@1
       displayName: npm install
       inputs:
         command: 'install'
         workingDir: '$(Build.SourcesDirectory)'
 
-- stage: build
-  displayName: Build
-  dependsOn: dependencyInstall
-  jobs:
   - job: build
     displayName: Build
+    dependsOn: dependencyInstall
     steps:
     - task: Bash@3
       displayName: Build
@@ -38,20 +34,6 @@ stages:
         script: |
           cd '$(Build.SourcesDirectory)'
           npm run build
-
-    - task: Bash@3
-      displayName: Check dist folder
-      inputs:
-        targetType: inline
-        script: |
-          echo "Build directory:"
-          pwd
-          echo "Source directory:"
-          echo "$(Build.SourcesDirectory)"
-          echo "Contents of source directory:"
-          ls -la "$(Build.SourcesDirectory)"
-          echo "Contents of dist:"
-          ls -la "$(Build.SourcesDirectory)/dist"
 
 
 - stage: nginxInstall
