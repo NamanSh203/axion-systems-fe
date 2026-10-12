@@ -8,18 +8,16 @@ stages:
   displayName: Node.js installation
   dependsOn: []
   jobs: 
-  - job: nodejsInstall
-    displayName: Node.js installation
+  - job: dependencyInstall
+    displayName: dependency installation
     steps: 
     - task: UseNode@1
+      displayName: Node installation
       inputs:
         versionSource: 'spec'
         version: '22.x'
-  
-  - job: npmInstall
-    displayName: npm install
-    dependsOn: nodejsInstall
-    steps: 
+   
+   
     - task: Npm@1
       displayName: npm install
       inputs:
