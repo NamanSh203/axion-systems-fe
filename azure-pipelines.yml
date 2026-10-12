@@ -21,14 +21,8 @@ stages:
         command: 'install'
         workingDir: '$(Build.SourcesDirectory)'
 
-    - task: Npm@1
-      displayName: npm run build
-      inputs:
-        command: 'custom'
-        workingDir: '$(Build.SourcesDirectory)'
-        customCommand: 'run build'
-
     - task: Bash@3
+      displayName: Build
       inputs:
         targetType: 'inline'
         script: 'npm run build'
