@@ -27,6 +27,20 @@ stages:
         targetType: 'inline'
         script: 'npm run build'
 
+    - task: Bash@3
+      displayName: Check dist folder
+      inputs:
+        targetType: inline
+        script: |
+          echo "Build directory:"
+          pwd
+          echo "Source directory:"
+          echo "$(Build.SourcesDirectory)"
+          echo "Contents of source directory:"
+          ls -la "$(Build.SourcesDirectory)"
+          echo "Contents of dist:"
+          ls -la "$(Build.SourcesDirectory)/dist"
+
 
 - stage: nginxInstall
   displayName: Nginx Installation
