@@ -22,7 +22,7 @@ stages:
         workingDir: '$(Build.SourcesDirectory)'
 
     - task: Npm@1
-      displayName: npm run build
+      displayName: run build
       inputs:
         command: 'custom'
         workingDir: '$(Build.SourcesDirectory)'
