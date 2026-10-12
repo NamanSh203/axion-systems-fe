@@ -25,7 +25,9 @@ stages:
       displayName: Build
       inputs:
         targetType: 'inline'
-        script: 'npm run build'
+        script: 
+          cd '$(Build.SourcesDirectory)'
+          npm run build
 
     - task: Bash@3
       displayName: Check dist folder
