@@ -29,15 +29,14 @@ stages:
   dependsOn: dependencyInstall
   jobs:
   - job: build
-    displayName: build
+    displayName: Build
     steps:
-
     - task: Bash@3
       displayName: Build
       inputs:
         targetType: 'inline'
-        workingDir: '$(Build.SourcesDirectory)'
-        script:
+        script: |
+          cd '$(Build.SourcesDirectory)'
           npm run build
 
     - task: Bash@3
