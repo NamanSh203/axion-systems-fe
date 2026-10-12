@@ -4,12 +4,12 @@ trigger: none
 
 stages:
 
-- stage: Build
+- stage: build
   displayName: Build Frontend
   dependsOn: []
   jobs: 
-  - job: dependencyInstall
-    displayName: dependency installation
+  - job: buildFrontend
+    displayName: Build Frontend
     steps: 
     - task: UseNode@1
       displayName: Node installation
@@ -23,10 +23,6 @@ stages:
         command: 'install'
         workingDir: '$(Build.SourcesDirectory)'
 
-  - job: build
-    displayName: Build
-    dependsOn: dependencyInstall
-    steps:
     - task: Bash@3
       displayName: Build
       inputs:
@@ -38,7 +34,7 @@ stages:
 
 - stage: nginxInstall
   displayName: Nginx Installation
-  dependsOn: []
+  dependsOn: build
   jobs: 
   - job: nginxInstall
     displayName: Nginx installation
