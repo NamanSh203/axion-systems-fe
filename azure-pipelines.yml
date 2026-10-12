@@ -22,11 +22,11 @@ stages:
         workingDir: '$(Build.SourcesDirectory)'
 
     - task: Npm@1
-      displayName: run build
+      displayName: npm run build
       inputs:
         command: 'custom'
         workingDir: '$(Build.SourcesDirectory)'
-        customCommand: 'npm run build'
+        customCommand: 'run build'
 
 
 - stage: nginxInstall
