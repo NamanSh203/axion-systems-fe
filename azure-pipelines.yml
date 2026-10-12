@@ -4,7 +4,7 @@ trigger: none
 
 stages:
 
-- stage: build
+- stage: dependencyInstall
   displayName: Node.js installation
   dependsOn: []
   jobs: 
@@ -15,18 +15,30 @@ stages:
       inputs:
         versionSource: 'spec'
         version: '22.x'
+  
+  - job: npmInstall
+    displayName: npm install
+    steps: 
     - task: Npm@1
       displayName: npm install
       inputs:
         command: 'install'
         workingDir: '$(Build.SourcesDirectory)'
 
+- stage: build
+  displayName: Build
+  dependsOn: dependencyInstall
+  jobs:
+  - job: build
+    displayName: build
+    steps:
+
     - task: Bash@3
       displayName: Build
       inputs:
         targetType: 'inline'
-        script: |
-          cd $(Build.SourcesDirectory)
+        workingDir: '$(Build.SourcesDirectory)'
+        script:
           npm run build
 
     - task: Bash@3
@@ -46,7 +58,7 @@ stages:
 
 - stage: nginxInstall
   displayName: Nginx Installation
-  dependsOn: build
+  dependsOn: []
   jobs: 
   - job: nginxInstall
     displayName: Nginx installation
