@@ -18,6 +18,7 @@ stages:
   
   - job: npmInstall
     displayName: npm install
+    dependsOn: nodejsInstall
     steps: 
     - task: Npm@1
       displayName: npm install
