@@ -26,7 +26,7 @@ stages:
       inputs:
         targetType: 'inline'
         script: 
-          cd '$(Build.SourcesDirectory)'
+          cd $(Build.SourcesDirectory)
           npm run build
 
     - task: Bash@3
