@@ -39,7 +39,7 @@ stages:
 
 - stage: nginxInstall
   displayName: Nginx Installation
-  dependsOn: []
+  dependsOn: build
   jobs: 
   - job: nginxInstall
     displayName: Nginx installation
